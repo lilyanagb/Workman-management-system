@@ -1,0 +1,35 @@
+{% extends 'partials/base.html' %}
+{% block title %}Staff page{% endblock %}
+
+{% block content1 %}
+{% load static %}
+    <img style="float: left; margin: 40px 20px 20px 40px;" src="{% static '/craftman.png' %}" alt="craftman" width="150" height="200" />
+{% include 'partials/board.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="row align-items-end">
+    <div class="col">
+        <table class="table bg-white">
+            <thead class="bg-secondary text-white">
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for handyman in staffs %}
+                <tr>
+                    <td>{{ handyman.username }}</td>
+                    <td>{{ handyman.first_name }}</td>
+                    <td>{{ handyman.last_name }}</td>
+                    <td>{{ handyman.email }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

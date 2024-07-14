@@ -1,0 +1,8 @@
+{% extends 'partials/base.html' %}
+{% block title %}Home page{% endblock %}
+
+{% block content1 %}
+{% load static %}
+    <img style="float: left; margin: 40px 20px 20px 40px;" src="{% static '/craftman.png' %}" alt="craftman" width="150" height="200" />
+{% include 'partials/board.html' %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'partials/base.html' %}
+{% block title %}Delete page{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mt-4 offset-md-3">
+            <div class="border bg-white p-3">
+               <h3>Delete request</h3> 
+               <hr>
+               <div class="alert alert-danger m-2">
+                <h4>This action cannot be undone.<br> Are you sure you want to delete this order?</h4>
+               </div>
+               <form method="POST">
+                {% csrf_token %}
+                {{ form }}
+                    <div class="text-right">
+                        <input class="btn btn-danger" type="submit" value="Confirm">
+                        <a class="btn btn-secondary" href="{% url 'gui-orders' %}">Cancel</a>
+                    </div>
+               </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'partials/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Order page{% endblock %}
+
+{% block content1 %}
+{% load static %}
+    <img style="float: left; margin: 40px 20px 20px 40px;" src="{% static '/craftman.png' %}" alt="craftman" width="150" height="200" />
+{% include 'partials/board.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="row my-4">
+    <div class="col-md-4">
+        {% if user.is_authenticated and user.is_active and not user.is_staff%}
+        <div class="card card-body">
+            <h5>Create request</h5>
+            <hr>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input class="btn btn-success btn-block" type="submit" value="Add">
+            </form>
+        </div>
+        {% endif %}
+    </div>
+    <div class="col-md-8">
+        <table class="table bg-white">
+            <thead class="bg-secondary text-white">
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Order</th>
+                    <th scope="col">Activity</th>
+                </tr>
+            </thead>
+            {% if user.is_active and not user.is_staff %}
+            <tbody>
+                {% for request in curr %}
+                <tr>
+                    <td>{{ request.owner }}</td>
+                    <td>{{ request.category }}</td>
+                    <td>{{ request.status }}</td>
+                    <td>{{ request.order }}</td>
+                    <td>
+                        <a class="btn btn-info btn-sm ml-2"
+                        href="{% url 'gui-orders-update' request.id %}">Edit</a>
+                        <a class="btn btn-danger btn-sm ml-2"
+                            href="{% url 'gui-orders-delete' request.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            {% else %}
+            <tbody>
+                {% for request in order_requests %}
+                <tr>
+                    <td>{{ request.owner }}</td>
+                    <td>{{ request.category }}</td>
+                    <td>{{ request.status }}</td>
+                    <td>{{ request.order }}</td>
+                    {% if request.status == "Active" %} 
+                    <td>
+                        <a class="btn btn-info"
+                        href="{% url 'gui-orders-mail' request.id %}">Take the order</a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+            {% endif %}
+        </table>
+    </div>
+</div>
+{% endblock %}
